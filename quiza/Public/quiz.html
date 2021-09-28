@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="../Public/icon.png">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  
+  <title>Quiz</title>
+  <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;800&display=swap');
+
+body{
+    
+    font-family: 'Heebo', sans-serif;
+
+    background-color: rgb(57, 14, 77);
+    margin: 0;
+    font-size:16px
+  
+}
+ 
+*{
+
+    box-sizing: border-box;
+    margin: 0;
+    padding:0 ;
+    outline:none;
+}
+
+.contenter{
+
+    max-width: 700px;
+    background-color: rgb(255, 255, 255);
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 18px;
+    animation: fadeInright 1s ease;
+}   
+@keyframes fadeInright {
+    0%{
+        transform: translateX(40px);
+        opacity: 0;
+    }
+    100%{
+        transform: translateX(0px);
+        opacity: 1;
+    }
+    
+} 
+
+.home-box.hide{
+    display: none;
+}
+
+.quiz-box.hide{
+    display: none;
+}
+.result-box.hide{
+    display: none;
+}
+
+.contenter::before,.contenter::after{
+    content: '';
+    clear: both;
+    display: table;
+}
+
+h2 {
+    margin-bottom: 15px ;
+    line-height: 25px;
+    font-size: 18px;
+    color: rgb(119, 0, 255) ;
+    font-weight: 500;
+
+}
+
+p{
+    font-size: 16px;
+    margin-bottom: 10px;
+    line-height: 22px;
+    color: rgb(0, 0, 0);
+    font-weight: 400;
+      
+}
+span{
+    font-weight: 500;
+}
+
+.one{
+
+    margin-top: 20px;
+}
+.one{
+    padding: 15px 45px;
+    background-color: rgb(25, 90, 99) ;
+    color: rgb(255, 255, 255) ;
+    font-family: 'Heebo', sans-serif; 
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer; 
+    display:inline-block;
+
+
+}
+
+.two{
+    padding: 15px 45px;
+    background-color: rgb(107, 177, 171) ;
+    color: rgb(255, 255, 255) ;
+    font-family: 'Heebo', sans-serif; 
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer; 
+    margin: 15px 0;
+
+
+}
+
+.three{
+    
+    background-color: rgb(25, 90, 99) ;
+    color: rgb(255, 255, 255) ;
+    font-family: 'Heebo', sans-serif; 
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer; 
+   
+}
+.contenter .question-text,.question-number,.option-question,.answers-indicator, .next-button{
+    width: 100%;
+    float: left;
+}
+
+
+.question-number{
+font-size: 18px;
+color: teal;
+font-weight: 600;
+border-bottom: 1px solid #cccccc;
+padding-bottom: 10px;
+
+line-height: 25px;
+
+}
+
+.contenter .question-text{
+    
+    font-size: 22px;
+    color: #000000;
+    line-height: 28px;
+    font-weight: 800;
+    padding: 20px 0;
+    margin: 0;  
+
+}
+
+.contenter .option-question .option{
+    background-color: rgb(121, 119, 119);
+    padding: 13px 15px;
+    font-size: 16px;
+    line-height: 22px;
+    color: rgb(255, 255, 255);
+    border-radius: 5px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    /* text-transform: capitalize; */
+    opacity: 1;
+    animation: fadeIn 0.3s ease forwards ;
+    position: relative;
+    overflow: hidden;
+}
+.contenter .option-question .option.already-answered{
+    pointer-events: none;
+
+}
+@keyframes fadeIn{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1; 
+    }
+}
+
+.contenter .option-question .option.correct::before{
+    content:''; 
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(21, 163, 21) ;
+    z-index: -1 ;
+    animation: slideInLeft .5s ease forwards
+}
+
+@keyframes slideInLest{
+    0%{
+        transform: translateX(-100);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}
+.contenter .option-question .option.wrong::before{
+    content:''; 
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(255, 0, 0) ;
+    z-index: -1 ;
+    animation: slideInLeft .5s ease forwards
+}
+.contenter .option-question .option.wrong{
+    color: #ffffff;
+}
+.contenter .option-question .option.correct{
+    color: #ffffff;    
+}
+.contenter .answers-indicator {
+    border-top: 1px solid #cccccc;
+}
+
+.contenter .answers-indicator div {
+    
+   
+    height: 40px;
+    width: 40px;
+    display: inline-block;
+    background-color: #cccccc;
+    border-radius: 50%;
+    margin-right: 3px;
+    margin-top: 15px;
+    margin-left: 15px;
+}
+
+.contenter .answers-indicator div.correct{
+    
+
+    background-color:rgb(21, 163, 21);
+    
+    background-image: url('../correct.png');
+    background-size: 50%;
+    background-repeat:no-repeat;
+    background-position:center;
+}
+
+.contenter .answers-indicator div.wrong{
+     
+    background-color:rgb(255, 0, 0);
+    background-image: url('../wrong.png');
+    background-size: 50%;
+    background-repeat:no-repeat;
+    background-position:center;
+}
+    
+
+.numer{
+padding:  8px;
+    color: rgb(254, 255, 255);
+    
+    text-align:center;
+}
+
+
+.result-box{
+    text-align:center;
+}
+.result-box.hide{
+    display: none ;
+}
+
+.result-box h2{
+
+    font-size: 36px;
+    line-height: 42px;
+    color: rgb(40, 97, 97);
+}
+
+.result-box table{
+    width: 100%;
+    border-collapse: collapse;
+    margin: 30px 0;
+}
+.result-box table td {
+    border: 1px solid #000000;
+    padding: 8px 15px ;
+    font-weight: 500;
+    color: #000000;
+    width: 50%;
+    text-align:left ;
+    font-size: 18px;
+    text-transform: uppercase;
+
+}
+
+.TAY-BOX{
+    margin-right: 20px;
+}
+
+@media(max-width: 767px){
+    .result-box .TAY-BOX{
+        margin-bottom: 15px;
+    }
+    body{
+        padding:15px ;
+    }
+
+}
+
+img{
+    width: 240px;
+    position:absolute;
+    top:80%;
+    left:80%;
+    
+    
+
+
+
+}
+
+
+  </style>
+<style>
+
+
+    .btn-contain {
+      margin: 5% auto;
+      min-height: 100px;
+    }
+    .btn-outline-contain {
+      text-align: center;
+      max-width: 270px;
+      margin: 0 auto;
+    }
+    .btn-outline {
+      font-family:sans-serif;
+      font-weight:bold;
+      text-align: center;
+      color: white;
+      text-transform: uppercase;
+      text-decoration: none;
+      outline: none;
+      cursor: pointer;
+      position: relative;
+      border: 1px solid rgba(255, 235, 59, 0.5);
+      color: rgb(255, 255, 255);
+      text-decoration: none;
+      padding: 20px;
+      display: block;
+        -webkit-transition: .5s ease-in-out;
+      -moz-transition: .5s ease-in-out;
+      -o-transition: .5s ease-in-out;
+      transition: .5s ease-in-out;
+    }
+    .btn-outline:hover .btn-outline-inner {
+      font-weight:bold;
+      color: #00ff9d;
+      -webkit-transition: .5s ease-in-out;
+      -moz-transition: .5s ease-in-out;
+      -o-transition: .5s ease-in-out;
+      transition: .5s ease-in-out;
+    } 
+    .btn-outline:hover .line-1 {animation: outline1 2s infinite ease-in-out;} 
+    .btn-outline:hover .line-2 {animation: outline2 2s infinite ease-in-out;}    
+    .btn-outline:hover .line-3 {animation: outline3 2s infinite ease-in-out;}
+    .btn-outline:hover .line-4 {animation: outline4 2s infinite ease-in-out;} 
+    .line-1 {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 2px;
+        background-color: #ff00b3;
+        left: 0;
+        bottom: 0;
+    }
+    .line-2 {
+      content: "";
+      display: block;
+      position: absolute;
+      height: 2px;
+      background-color: #ff0000;
+      left: 0;
+      top: 0;
+    }
+    .line-3 {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 2px;
+      background-color: #fffb04;
+      right: 0;
+      top: 0;
+    }
+    .line-4 {
+      content: "";
+      display: block;
+      position: absolute;
+      height: 2px;
+      background-color: #00c3ff;
+      right: 0;
+      top: 57px;
+    }
+    @keyframes outline1 {
+      0% {height: 100%; bottom: 0;}
+      54% {height: 0; bottom: 100%;}
+      55% {height: 0; bottom: 0;}
+      100% {height: 100%; bottom: 0;}
+    }
+    @keyframes outline2 {
+      0% {width: 0;left: 0;}
+      50% {width: 100%; left: 0;}
+      100% {width: 0; left: 100%;}
+    }
+    
+    @keyframes outline3 {
+      0% {height: 100%; top: 0;}
+      54% {height: 0; top: 100%;}
+      55% {height: 0; top: 0;}
+      100% {height: 100%; top: 0;}
+    }
+    
+    @keyframes outline4 {
+      0% { width: 0; right: 0;}
+      55% {width: 100%; right: 0;}
+      100% {width: 0; right: 100%;}
+    }
+    </style>
+
+</head>
+
+<!-- aquib work  -->
+<body>
+    <div class="pic">
+        <a href=" https://www.instagram.com/nemesis.graphic_aquib/?hl=en"> <img src="signature.png" alt=""></a>
+    </div>
+
+
+
+  <div class="contenter  home-box ">
+    <h2>Quiz Test</h2>
+    <p>Number of questions: <span class="Number-question"><i class="fas fa-angle-right"></i></span></p>
+    <button type="button" class="one" onclick="startQuiz()">start Quiz</button>
+
+  </div>
+
+  <div class="contenter quiz-box hide ">
+    <div class="question-number">
+      
+    </div>
+    
+    <div class="question-text">
+    
+     
+  </div>
+
+    <div class="option-question">
+     
+    </div>
+    
+    <div class="next-button">
+      <button type="button" class="two" onclick="next()">Next</button>
+    </div>
+    <div class="answers-indicator">
+     
+    </div>
+
+  </div>
+  <div class="   contenter result-box hide ">
+     <h2> Result</h2>
+     <table>
+       <tr>
+         <td> Total question </td>
+         <td><span class="total-question"></span></td>
+       </tr>
+       <tr>
+         <td>Attempt</td>
+         <td><span class="total-Attempt"></span></td>
+       </tr>
+       <tr>
+        <td>correct</td>
+        <td><span class="total-correct"></span></td>
+      </tr>
+      <tr>
+        <td>wrong</td>
+        <td><span class="total-wrong"></span></td>
+      </tr>
+      <tr>
+        <td>percentage</td>
+        <td><span class="percentage"></span></td>
+      </tr>
+      <tr>
+        <td>your total score</td>
+        <td><span class="total-score"></span></td>
+      </tr>
+     </table>
+     <button type="button" class="TAY-BOX  one" onclick="tayAgainQuiz()"> Try Again</button>
+     
+        <button type="button" class="TAY-BOX three" onclick="goToHome()"> 
+      
+            <div class='btn-outline-contain'>
+              <a class='btn-outline' href=''>
+                <span class="btn-outline-inner">go to home
+                </span>
+                <span class='line-1'></span>
+                <span class='line-2'></span>
+                <span class='line-3'></span>
+                <span class='line-4'></span>
+              </a>
+            </div>
+        </div>
+        
+    
+    </button>
+  </div>
+
+  </div>
+
+   
+  <script> 
+    const quiz = [
+        
+    {
+        q:'HTML stands for ?',
+        option: ['HighText Machine Language', 'HyperText and links Markup Language', 'HyperText Markup Language', 'None of these'],
+        answer: 2
+    },
+    {
+        q:'The correct sequence of HTML tags for starting a webpage is ?',
+        option: ['Head, Title, HTML, body', 'HTMT, Body, Title, Head', 'HTMD, Head, Title, Body', 'HTML, Head, Title, Body'],
+        answer: 3
+    },
+
+    {
+        q:'Which of the following element is responsible for making the text bold in HTML?',
+        option: ['< pre >', '< a >', '< b >', '< br >'],
+        answer: 2
+    },
+
+    {
+        q:'Which of the following tag is used for inserting the largest heading in HTML?',
+        option: ['< h3 >', '< h1 >', '< h5 >', '< h6 >'],
+        answer: 1
+    },
+
+    {
+        q:'Which of the following tag is used to insert a line-break in HTML?',
+        
+        option: ['< br >', '< a >', '< pre >', '< b >'],
+        answer: 0
+    },
+
+    {
+        q:'How to create an unordered list a list with the list items in bullets in HTML?',
+        option: [' < ul >', '< ol >', '< li >', '< i >'],
+        answer: 0
+    },
+
+    {
+        q:'Which character is used to represent the closing of a tag in HTML?',
+        option: ['< // >', '< ! >', '< / >', '< . >'],
+        answer: 2
+    },
+
+    {
+        q:'How to create a hyperlink in HTML?',
+        option: [ '< a href = "www.javatpoint.com"> javaTpoint.com < / >', '< a url = "www.javatpoint.com" javaTpoint.com / a >', '< a link = "www.javatpoint.com" > javaTpoint.com < / >', '< a > www.javatpoint.com < javaTpoint.com / a >'],
+        answer: 0
+    },
+
+    
+    {
+        q:'How to create an ordered list (a list with the list items in numbers) in HTML?',
+        option: [' <ul >', '< ol >', '< li >', '< i >'],
+        answer: 1
+    },
+
+    {
+        q:'Which of the following element is responsible for making the text italic in HTML?',
+        option: ['< i >', '< italic >', '< it >', '< pre >'],
+        answer: 0
+    }
+]
+
+
+
+
+
+    const  questionNumber = document.querySelector(".question-number");
+    const  questionText = document.querySelector(".question-text");
+    const optionQuestion = document.querySelector(".option-question");
+    const answersIndicatorContainre = document.querySelector(".answers-indicator");
+    const quizBox = document.querySelector(".quiz-box");
+    const resultBox = document.querySelector(".result-box");
+    const homeBox = document.querySelector(".home-box");
+     
+    let questionCounter  = 0;
+    let currentQuestion;
+    let availableQuestion = [];
+    let availableOption = [];
+    let correctAnswers = 0;
+    let attempt = 0;
+
+    function setAvailabeQuestions(){
+        const totalQuestion = quiz.length;
+        for(let i=0; i<totalQuestion; i++){
+        availableQuestion.push(quiz[i])
+
+        }
+        
+    }
+
+    function getNewQuestion(){
+       questionNumber.innerHTML = "Question " + (questionCounter + 1 ) + " of " +  quiz.length;
+        const questionIndex = availableQuestion[Math.floor(Math.random() * availableQuestion.length)]
+        currentQuestion = questionIndex;
+        questionText.innerHTML = currentQuestion.q;
+        
+        const index1 = availableQuestion.indexOf(questionIndex);
+        availableQuestion.splice(index1,1);
+
+        const optionLen = currentQuestion.option.length
+        for(let i=0; i<optionLen; i++){
+            availableOption.push(i)
+        }
+        optionQuestion.innerHTML = ''; 
+        let animationDelay = 0.15;
+
+        for(let i=0; i<optionLen; i++){
+            const optonIndex = availableOption[Math.floor(Math.random() * availableOption.length)];
+            const index2 = availableOption.indexOf(optonIndex);
+            availableOption.splice(index2,1); 
+            const option = document.createElement("div");
+            option.innerHTML = currentQuestion.option[optonIndex];
+            option.id = optonIndex;
+            option.style.animationDelay = animationDelay + 's';
+            animationDelay = animationDelay + 0.15;
+            option.className = "option";
+            optionQuestion.appendChild(option)
+            option.setAttribute("onclick", "getResult(this)");
+
+        }
+        
+
+        questionCounter++
+
+     }
+
+     function getResult(element){
+         const  id = parseInt(element.id);
+        //  console.log(typeof id)
+         if(id === currentQuestion.answer){
+            element.classList.add("correct"); 
+            updateAnswerIndicator("correct");
+            correctAnswers++;
+            console.log("correct:"+correctAnswers);
+
+         }
+         else {
+            element.classList.add("wrong"); 
+           
+
+            const optionLen = optionQuestion.children.length;
+            for(let i =0; i<optionLen; i++){
+                if(parseInt(optionQuestion.children[i].id) === currentQuestion.answer){
+                    optionQuestion.children[i].classList.add("correct");
+                    updateAnswerIndicator("wrong");
+
+                }
+            }
+         }
+          attempt++;
+         unclickableOption();
+
+     }
+     function unclickableOption(){ 
+         const optionLen = optionQuestion.children.length;
+         for(let i=0; i<optionLen; i++){
+             optionQuestion.children[i].classList.add("already-answered");
+         }
+
+
+     }
+    
+        function answersIndicator(){
+            answersIndicatorContainre.innerHTML = '';
+            const totalQuestion = quiz.length;
+            for(let i =0; i<totalQuestion; i++){
+                const indicator = document.createElement("div");
+                answersIndicatorContainre.appendChild(indicator);
+            }
+
+        }
+
+        function  updateAnswerIndicator(markType){
+            answersIndicatorContainre.children[questionCounter-1].classList.add(markType)
+           
+        }
+    
+
+     function next(){
+         if(questionCounter === quiz.length){
+             console.log("quiz over");
+             quizOver();
+         }
+         else{
+             getNewQuestion();
+         }
+     }
+
+     function quizOver(){
+        quizBox.classList.add("hide");
+        resultBox.classList.remove("hide");
+        quizResult();
+     }
+    function quizResult(){
+        resultBox.querySelector(".total-question").innerHTML = quiz.length;
+        resultBox.querySelector(".total-Attempt").innerHTML = attempt; 
+        resultBox.querySelector(".total-correct").innerHTML = correctAnswers;
+        resultBox.querySelector(".total-wrong").innerHTML = attempt - correctAnswers;
+        const percentage = (correctAnswers/quiz.length)*100;
+        resultBox.querySelector(".percentage").innerHTML = percentage.toFixed(2) + "%";
+        resultBox.querySelector(".total-score").innerHTML = correctAnswers +" / " + quiz.length;
+    }
+
+    function resetQuiz(){
+     questionCounter  = 0;
+     correctAnswers = 0;
+     attempt = 0;
+
+    }
+
+
+    function tayAgainQuiz(){
+        resultBox.classList.add("hide");
+        quizBox.classList.remove("hide");
+        resetQuiz();
+        startQuiz();
+    }
+
+    function goToHome(){
+        resultBox.classList.add("hide");
+        homeBox.classList.remove("hide");
+        resetQuiz();
+    }
+     
+    
+    function startQuiz(){
+        homeBox.classList.add("hide");
+        quizBox.classList.remove("hide");
+
+        setAvailabeQuestions();
+
+        getNewQuestion();
+        answersIndicator();
+    }
+
+    window.onload = function(){
+        homeBox.querySelector(".Number-question").innerHTML = quiz.length;
+    }
+
+</script>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="/__/firebase/8.3.2/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<!-- Initialize Firebase -->
+<script src="/__/firebase/init.js"></script>
+
+</body>
+</html>  

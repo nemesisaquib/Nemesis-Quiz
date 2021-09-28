@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="quiz.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="pic">
+        <a href=" https://www.instagram.com/nemesis.graphic_aquib/?hl=en"> <img src="signature.png" alt=""></a>
+    </div>
+
+
+
+  <div class="contenter  home-box ">
+    <h2>Quiz Test</h2>
+    <p>Number of questions: <span class="Number-question"><i class="fas fa-angle-right"></i></span></p>
+    <button type="button" class="one" onclick="startQuiz()">start Quiz</button>
+
+  </div>
+
+  <div class="contenter quiz-box hide ">
+    <div class="question-number">
+      
+    </div>
+    
+    <div class="question-text">
+    
+     
+  </div>
+
+    <div class="option-question">
+     
+    </div>
+    
+    <div class="next-button">
+      <button type="button" class="two" onclick="next()">Next</button>
+    </div>
+    <div class="answers-indicator">
+     
+    </div>
+
+  </div>
+  <div class="   contenter result-box hide ">
+     <h2> Result</h2>
+     <table>
+       <tr>
+         <td> Total question </td>
+         <td><span class="total-question"></span></td>
+       </tr>
+       <tr>
+         <td>Attempt</td>
+         <td><span class="total-Attempt"></span></td>
+       </tr>
+       <tr>
+        <td>correct</td>
+        <td><span class="total-correct"></span></td>
+      </tr>
+      <tr>
+        <td>wrong</td>
+        <td><span class="total-wrong"></span></td>
+      </tr>
+      <tr>
+        <td>percentage</td>
+        <td><span class="percentage"></span></td>
+      </tr>
+      <tr>
+        <td>your total score</td>
+        <td><span class="total-score"></span></td>
+      </tr>
+     </table>
+     <button type="button" class="TAY-BOX  one" onclick="tayAgainQuiz()"> Try Again</button>
+     
+        <button type="button" class="TAY-BOX two" onclick="goToHome()"> go to home
+      
+          
+        </div>
+        
+    
+    </button>
+  </div>
+
+  </div>
+  <script src="quiz.js"></script>
+</body>
+</html>
